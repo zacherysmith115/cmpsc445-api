@@ -1,0 +1,49 @@
+swagger: '2.0'
+info:
+  description: Defines the endpoints for CMPSC445 Project API
+  version: '1.0'
+  title: 'CMPSC445 API'
+consumes:
+  - 'application/json'
+produces:
+  - 'application/json'
+
+basePath: '/'
+
+paths:
+  /:
+    get:
+      operationId: 'controllers.data_controller.DataView.root'
+      responses:
+        200:
+          description: "API is up and running"
+          schema:
+            type: 'string'
+
+  /data/{symbol}:
+    get:
+      operationId: 'controllers.data_controller.DataView.read_data'
+      parameters:
+        - in: path
+          name: symbol
+          type: string
+          format: path
+          required: true
+      responses:
+        200:
+          description: 'Data succesfully found'
+          schema:
+            $ref: '#/definitions/DataResponse'          
+        404:
+          description: 'No data available'
+            
+definitions:
+  DataResponse:
+    type: 'object'
+    properties:
+      symbol: 
+        type: 'string'
+      timeseries:
+        type: 'array'
+
+  
