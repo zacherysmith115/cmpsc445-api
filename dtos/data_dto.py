@@ -3,12 +3,16 @@ from datetime import date
 from typing import List
 
 @dataclass
-class TimeSeriesDatum:
-    date: date
-    close: float
+class TimeSeries:
+    dates: List[date]
+    values: List[float]
 
 @dataclass
 class DataResponse:
     symbol: str
-    historic_timeseries: List[TimeSeriesDatum]
-    prediction_timeseries: List[TimeSeriesDatum]
+    historic_timeseries: TimeSeries
+    prediction_timeseries: TimeSeries
+
+@dataclass
+class DataAvailableResponse:
+    tickers: List[str]

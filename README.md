@@ -1,6 +1,10 @@
 # cmpsc445-api
 Flask based API that returns historic data for a given security, and LSTM predictin forecast for that security
 
+# Important
+The use of the API assumes that the model repository is installed in the same parent directory as the API. Connects to the test.db 
+file under data folder.
+
 # Enviroment 
 A virtual enviroment would be recommend for this project utilzing python 3.8.10
 

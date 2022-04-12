@@ -20,6 +20,17 @@ paths:
           schema:
             type: 'string'
 
+  /data/available:
+    get:
+      operationId: 'controllers.data_controller.DataView.read_available_data'
+      responses:
+        200:
+          description: 'Data succesfully found'
+          schema:
+            type: 'array'
+        404:
+          description: 'System Error: Please try again later'
+
   /data/{symbol}:
     get:
       operationId: 'controllers.data_controller.DataView.read_data'
@@ -36,6 +47,8 @@ paths:
             $ref: '#/definitions/DataResponse'          
         404:
           description: 'No data available'
+          schema:
+            type: 'null'
             
 definitions:
   DataResponse:
@@ -43,7 +56,25 @@ definitions:
     properties:
       symbol: 
         type: 'string'
-      timeseries:
-        type: 'array'
-
-  
+      historic_timeseries:
+        type: 'object'
+        properties:
+          dates:
+            type: 'array'
+            items:
+              type: 'string'
+          values:
+            type: 'array'
+            items:
+              type: 'number'
+      prediction_timeseries:
+        type: 'object'
+        properties:
+          dates:
+            type: 'array'
+            items:
+              type: 'string'
+          values:
+            type: 'array'
+            items:
+              type: 'number'

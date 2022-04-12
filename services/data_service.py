@@ -1,18 +1,33 @@
+import pandas as pd
 from controllers import Database
 from dtos import DataResponse
-from dtos import TimeSeriesDatum
-from datetime import date
+from dtos import DataAvailableResponse
+from dtos import TimeSeries
+from typing import Union
+
+
+from dtos.data_dto import DataAvailableResponse
 
 db = Database()
 
 class DataService(object):
     
-    def read_data(self, symbol: str) -> DataResponse:
+    def read_data(self, symbol: str) -> Union[DataResponse, None]:
+        if symbol not in db.keys:
+            return None
+        
+        conn = db.engine.connect()
+        df = pd.read_sql_table(symbol, conn)
 
-        ts1 = TimeSeriesDatum(date(2022, 4, 7), 1.0)
-        ts2 = TimeSeriesDatum(date(2022, 4, 8), 1.1)
-        ts3 = TimeSeriesDatum(date(2022, 4, 9), 1.2)
-        dto = DataResponse(symbol, [ts1, ts2], [ts3])
+        historic_time_series = TimeSeries(dates = df["date"].to_list(), values=df["close"].to_list())
+        # TODO: Need to feed data into model to get prediction response
 
+        dto = DataResponse(symbol, historic_time_series, None)
+        
+        return dto
+
+    def read_available_data(self) -> DataAvailableResponse:
+
+        dto = DataAvailableResponse(tickers=db.keys)
 
         return dto

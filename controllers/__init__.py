@@ -31,6 +31,7 @@ class Database(object):
         self.engine = create_engine('sqlite:///../cmpsc445-model/data/test.db')
         self.metadata = MetaData(self.engine)
         self.metadata.reflect(self.engine)
+        self.keys = list(self.metadata.tables.keys())
 
     def __new__(cls):
         """
