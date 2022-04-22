@@ -3,7 +3,13 @@ from dtos import DataAvailableResponse
 from services import DataService
 
 class DataView(object):
-
+    """
+    View class to control the routing of end points, and return of the
+    appropiate responses. All database interaction should be handled 
+    through the services class. Each public function should have a 
+    corresponding end point spcecified in swagger.yaml file. 
+    """
+    
     def __init__(self) -> None:
         self.service = DataService()
 
